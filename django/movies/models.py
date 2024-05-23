@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 
 class Genre(models.Model):
     name = models.CharField(max_length=50)
+    state = models.BooleanField(default=True)
     external_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
@@ -14,6 +15,7 @@ class Director(models.Model):
     last_names = models.CharField(max_length=50)
     date_of_birth = models.DateField()
     nationality = models.CharField(max_length=100, blank=True, null=True)
+    state = models.BooleanField(default=True)
     external_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
