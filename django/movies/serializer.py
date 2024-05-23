@@ -22,7 +22,7 @@ class MovieSerializer(serializers.ModelSerializer):
     director_list = DirectorSerializer(many=True, read_only=True, source='directors')
     class Meta:
         model = Movie
-        fields = ('title', 'directors', 'genres', 'release_date', 'duration', 'rating', 'state', 'external_id', 'genre_list', 'director_list')
+        fields = ('title', 'directors', 'genres', 'release_date', 'duration', 'rating', 'external_id', 'genre_list', 'director_list')
 
     def create(self, validated_data):
         genres_data = validated_data.pop('genres')
