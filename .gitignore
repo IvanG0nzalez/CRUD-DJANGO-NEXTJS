@@ -15,7 +15,7 @@ venv/
 
 
 # dependencies
-/node_modules
+**/node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -24,7 +24,7 @@ venv/
 /coverage
 
 # next.js
-/.next/
+**/.next/
 /out/
 
 # production
