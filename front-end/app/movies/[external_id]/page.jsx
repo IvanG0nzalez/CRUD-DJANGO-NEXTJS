@@ -46,11 +46,12 @@ export default function SeeMovie() {
                                 <label className="form-label">Duration:</label>
                                 <p className="form-control">{movie.duration} minutes</p>
                             </div>
-
-                            <div className="detail-item mb-4">
-                                <label className="form-label">Rating:</label>
-                                <p className="form-control">{movie.rating}</p>
-                            </div>
+                            {movie.rating !== null && (
+                                <div className="detail-item mb-4">
+                                    <label className="form-label">Rating:</label>
+                                    <p className="form-control">{movie.rating}</p>
+                                </div>
+                            )}
 
                             <div className="detail-item mb-4">
                                 <label className="form-label">Genre(s):</label>
@@ -86,7 +87,7 @@ export default function SeeMovie() {
                             <div className="d-grid gap-2">
                                 <button className="btn btn-success" onClick={() => router.back()}>
                                     Volver
-                                </button> 
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -36,8 +36,6 @@ export default function Menu() {
             </ul>
 
             <style jsx>{`
-                * {
-                }
        			nav {
 					display: flex;
 					background-color: #333;
@@ -72,7 +70,7 @@ export default function Menu() {
 					background-color: #666;
 				}
 
-				@media (max-width: 768px) {
+				@media (max-width: 438px) {
 					ul {
 						flex-direction: column;
 						padding: 5px;

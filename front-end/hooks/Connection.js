@@ -17,11 +17,10 @@ export async function get(recurso) {
   return responseData;
 }
 
-export async function update(recurso, data, token) {
+export async function update(recurso, data) {
   const headers = {
     Accept: "application/json",
-    "Content-type": "application/json",
-    token: token,
+    "Content-type": "application/json"
   };
 
   const response = await fetch(URL + recurso, {
@@ -35,11 +34,10 @@ export async function update(recurso, data, token) {
   return responseData;
 }
 
-export async function send(recurso, data, token) {
+export async function send(recurso, data) {
   const headers = {
     Accept: "application/json",
-    "Content-type": "application/json",
-    token: token,
+    "Content-type": "application/json"
   };
 
   const response = await fetch(URL + recurso, {

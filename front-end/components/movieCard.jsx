@@ -1,36 +1,43 @@
+import { update } from "@/hooks/Connection";
 import { useRouter } from "next/navigation";
+import { confirmDelete } from "./Messages";
 
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, onDelete }) => {
     const router = useRouter();
 
-    const handleSeeClick = (external_id) => {
-        router.push(`/movies/${external_id}`)
+    const handleDetailClick = (external_id) => {
+        router.push(`/movies/${external_id}`);
     };
 
-    const handleDeleteClick = () => {
-
+    const handleDeleteClick = (external_id) => {
+        confirmDelete(async () => {
+            await update(`movies/${external_id}/`, {state: false});
+            onDelete(external_id);
+        });
     };
 
-    const handleModifyClick = () => {
-
+    const handleModifyClick = (external_id) => {
+        router.push(`/movies/modify/${external_id}`);
     };
 
     return (
         <div>
             <div className="movie-card">
                 <div className="movie-header">
-                    <h3>{movie.title}</h3>
+                    <h4>{movie.title}</h4>
                 </div>
                 <div className="separator"></div>
                 <p><strong>Release date:</strong> {movie.release_date}</p>
                 <p><strong>Duration:</strong> {movie.duration} minutes</p>
-                <p><strong>Rating:</strong> {movie.rating}</p>
+                {movie.rating !== null && (
+                    <p><strong>Rating:</strong> {movie.rating}</p>
+                )}
                 <div className="separator"></div>
                 <div className="buttons">
-                    <button className="btn btn-primary" onClick={() => handleSeeClick(movie.external_id)}>See</button>
-                    <button className="btn btn-danger" onClick={handleDeleteClick}>Delete</button>
-                    <button className="btn btn-warning" onClick={handleModifyClick}>Modify</button>
+                    <button className="btn btn-primary" onClick={() => handleDetailClick(movie.external_id)}>Details</button>
+                    <button className="btn btn-danger" onClick={() => handleDeleteClick(movie.external_id)}>Delete</button>
+                    <button className="btn btn-warning" onClick={() => handleModifyClick(movie.external_id)}>Modify</button>
                 </div>
             </div>
 
@@ -46,8 +53,8 @@ const MovieCard = ({ movie }) => {
 					box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 					background-color: #cfe2f3;
 					transition: transform 0.3s, box-shadow 0.3s;
-					min-height: 220px;
-					width: 310px;
+					min-height: 230px;
+					width: 360px;
 					justify-content: space-between; 
 					align-items: left;
 				}
@@ -66,6 +73,8 @@ const MovieCard = ({ movie }) => {
                 .buttons {
                     display: flex;
                     justify-content: space-between;
+                    width: 80%;
+                    margin-left: 10%;
                 }
 
                 .btn-see {
