@@ -4,12 +4,12 @@ from movies.models import Movie, Genre, Director
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        fields = ('name', 'external_id')
+        fields = ('name', 'state', 'external_id')
 
 class DirectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Director
-        fields = ('names', 'last_names', 'date_of_birth', 'nationality', 'external_id')
+        fields = ('names', 'last_names', 'date_of_birth', 'nationality', 'state', 'external_id')
 
 class MovieSerializer(serializers.ModelSerializer):
     genres = serializers.ListField(
@@ -18,18 +18,27 @@ class MovieSerializer(serializers.ModelSerializer):
     directors = serializers.ListField(
         child=serializers.UUIDField(format='hex_verbose'), write_only=True
     )
-    genre_list = GenreSerializer(many=True, read_only=True, source='genres')
-    director_list = DirectorSerializer(many=True, read_only=True, source='directors')
+    genre_list = serializers.SerializerMethodField()
+    director_list = serializers.SerializerMethodField()
+
     class Meta:
         model = Movie
-        fields = ('title', 'directors', 'genres', 'release_date', 'duration', 'rating', 'external_id', 'genre_list', 'director_list')
+        fields = ('title', 'directors', 'genres', 'release_date', 'duration', 'rating', 'state', 'external_id', 'genre_list', 'director_list')
+
+    def get_genre_list(self, obj):
+        active_genres = obj.genres.filter(state=True)
+        return GenreSerializer(active_genres, many=True).data
+
+    def get_director_list(self, obj):
+        active_directors = obj.directors.filter(state=True)
+        return DirectorSerializer(active_directors, many=True).data
 
     def create(self, validated_data):
         genres_data = validated_data.pop('genres')
         directors_data = validated_data.pop('directors')
         movie = Movie.objects.create(**validated_data)
-        movie.genres.set(Genre.objects.filter(external_id__in=genres_data))
-        movie.directors.set(Director.objects.filter(external_id__in=directors_data))
+        movie.genres.set(Genre.objects.filter(external_id__in=genres_data, state=True))
+        movie.directors.set(Director.objects.filter(external_id__in=directors_data, state=True))
         return movie
 
     def update(self, instance, validated_data):
