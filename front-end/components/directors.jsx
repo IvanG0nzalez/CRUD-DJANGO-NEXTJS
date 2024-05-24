@@ -80,7 +80,7 @@ const Directors = () => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="5">There are no directors registered yet.</td>
+                            <td colSpan="6">There are no directors registered yet, start adding them by pressing the buttom above.  </td>
                         </tr>
                     )}
                 </tbody>
@@ -143,15 +143,9 @@ const Directors = () => {
 						padding: 10px;
 					}
 
-					.actions {
-						flex-direction: column;
-						align-items: center;
-					}
-
-					.btn {
-						margin-top: 3px;
-						margin-right: 0px;
-					}
+                    .btn {
+                        margin-right: 4.3px;
+                    }
 				}
 
 				@media (max-width: 1024px) {

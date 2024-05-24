@@ -59,13 +59,17 @@ export default function ModifyMovie() {
                 directors: directorIds,
                 genres: genreIds,
             });
+
+            const savedFormData = JSON.parse(localStorage.getItem("formData"));
+            if(savedFormData) {
+                localStorage.removeItem("formData");
+            }
         };
 
         fetchData();
-    }, [external_id, reset]);
+    }, [external_id, reset, setValue]);
 
     const sendData = async (formData) => {
-
         const releaseDateISO = formData.release_date.toISOString();
         const releaseDateYYYYMMDD = releaseDateISO.split('T')[0];
 
@@ -100,6 +104,32 @@ export default function ModifyMovie() {
             setValue("genres", updatedGenres);
             return updatedGenres;
         });
+    };
+
+    const handleAddNewDirector = () => {
+        const formData = {
+            title: document.getElementById("title").value,
+            release_date: document.getElementById("release_date").value,
+            duration: document.getElementById("duration").value,
+            rating: document.getElementById("rating").value,
+            selectedDirectors,
+            selectedGenres
+        };
+        localStorage.setItem("formData", JSON.stringify(formData));
+        router.push("/directors/add");
+    };
+
+    const handleAddNewGenre = () => {
+        const formData = {
+            title: document.getElementById("title").value,
+            release_date: document.getElementById("release_date").value,
+            duration: document.getElementById("duration").value,
+            rating: document.getElementById("rating").value,
+            selectedDirectors,
+            selectedGenres
+        };
+        localStorage.setItem("formData", JSON.stringify(formData));
+        router.push("/genres/add");
     };
 
     return (
@@ -159,6 +189,9 @@ export default function ModifyMovie() {
 
                                 <div className="mb-4">
                                     <label className="form-label"><strong>Directors</strong></label>
+                                    <div className="d-flex justify-content-between align-items-center mb-2">
+                                        <button type="button" className="btn btn-secondary btn-sm ms-auto" onClick={handleAddNewDirector}>+ Add New Director</button>
+                                    </div>
                                     <table className="table">
                                         <thead>
                                             <tr>
@@ -187,6 +220,9 @@ export default function ModifyMovie() {
 
                                 <div className="mb-4">
                                     <label htmlFor="genres" className="form-label"><strong>Genres</strong></label>
+                                    <div className="d-flex justify-content-between align-items-center mb-2">
+                                        <button type="button" className="btn btn-secondary btn-sm ms-auto" onClick={handleAddNewGenre}>+ Add New Genre</button>
+                                    </div>
                                     <table className="table">
                                         <thead>
                                             <tr>

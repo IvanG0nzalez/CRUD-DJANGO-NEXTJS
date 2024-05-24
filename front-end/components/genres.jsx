@@ -74,7 +74,7 @@ const Genres = () => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="3">There are no genres registered yet.</td>
+                            <td colSpan="3">There are no genres registered yet, start adding them by pressing the buttom above.</td>
                         </tr>
                     )}
                 </tbody>
@@ -135,16 +135,6 @@ const Genres = () => {
 					.table-container {
 						width: 100%;
 						padding: 10px;
-					}
-
-					.actions {
-						flex-direction: column;
-						align-items: center;
-					}
-
-					.btn {
-						margin-top: 3px;
-						margin-right: 0px;
 					}
 				}
 

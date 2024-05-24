@@ -30,8 +30,8 @@ export default function AddMovie() {
     const { register, handleSubmit, formState, setValue, control, trigger } = useForm(formOptions);
     const { errors } = formState;
 
-    const selectedDirectors = useWatch({ control, name: 'directors' });
-    const selectedGenres = useWatch({ control, name: 'genres' });
+    const selectedDirectors = useWatch({ control, name: 'directors' }) || [];
+    const selectedGenres = useWatch({ control, name: 'genres' }) || [];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -116,7 +116,7 @@ export default function AddMovie() {
         };
         localStorage.setItem("formData", JSON.stringify(formData));
         router.push("/genres/add");
-    }
+    };
 
     return (
         <div className="container mt-5">
