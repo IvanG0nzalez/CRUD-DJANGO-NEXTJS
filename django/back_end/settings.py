@@ -85,6 +85,7 @@ DATABASES = {
     }
 }
 """
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -93,6 +94,17 @@ DATABASES = {
         'PASSWORD': '1405',
         'HOST': 'localhost',
         'PORT': '5432'
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dbpractica9',
+        'USER': 'root',
+        'PASSWORD': '1405',
+        'HOST': 'db',
+        'PORT': '3306'
     }
 }
 
