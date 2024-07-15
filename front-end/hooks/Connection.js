@@ -1,4 +1,4 @@
-let URL = "http://localhost:8000/movies/api/v1/";
+let URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export function url_api() {
   return URL;

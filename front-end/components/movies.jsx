@@ -50,10 +50,10 @@ const Movies = () => {
                 ) : (
                     <div className="movie-card">
                         <div className="movie-header">
-                            <h4>There's no movies yet.</h4>
+                            <h4>There&apos;s no movies yet.</h4>
                         </div>
                         <div className="separator"></div>
-                        <p>You can start adding movies by pressing the "New Movie" button.</p>
+                        <p>You can start adding movies by pressing the &quot;New Movie&quot; button.</p>
                         <div className="separator"></div>
                     </div>
                 )}

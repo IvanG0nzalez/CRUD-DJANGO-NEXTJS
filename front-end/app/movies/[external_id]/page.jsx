@@ -19,7 +19,7 @@ export default function SeeMovie() {
         };
 
         fetchData();
-    }, []);
+    }, [external_id]);
 
     if (isLoading) {
         return LoadingScreen();
