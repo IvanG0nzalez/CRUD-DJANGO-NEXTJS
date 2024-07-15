@@ -18,8 +18,7 @@ services:
       start_period: 5s
 
   backend:
-    build: ./django
-    image: backend-movies-image:v1
+    image: ivang0nzalez/backend-movies-image:v1
     command: >
       sh -c "python manage.py makemigrations &&
               python manage.py migrate && 
@@ -33,8 +32,7 @@ services:
       - ./django/.env
 
   frontend:
-    build: ./front-end
-    image: frontend-movies-image:v1
+    image: ivang0nzalez/frontend-movies-image:v1
     command: npm run start
     ports:
       - "3000:3000"
