@@ -4,20 +4,21 @@ services:
   db:
     image: mysql:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DATABASE_NAME}
-      - MYSQL_USER=&{DB_USER}
+      - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      test: ["CMD", "mysqladmin", "--user=${DB_USER}", "--password=${DB_PASSWORD}", "ping"]
       interval: 5s
       timeout: 10s
       retries: 10
       start_period: 5s
 
   backend:
+    build: ./django
     image: ivang0nzalez/backend-movies-image:v1
     command: >
       sh -c "python manage.py makemigrations &&
