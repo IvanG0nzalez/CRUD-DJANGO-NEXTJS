@@ -2,27 +2,24 @@ version: '3'
 
 services:
   db:
-    image: mariadb
+    image: mysql:latest
     environment:
-      - MARIADB_ROOT_PASSWORD=1405
-      - MARIADB_DATABASE=dbpractica9
-    ports:
-      - "3307:3306"
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_USER=&{DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mariadb", "-uroot", "-p1405", "-hdb", "-e", "SELECT 1"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
       interval: 5s
       timeout: 10s
       retries: 10
       start_period: 5s
 
-  back-end:
-    build: 
-      context: ./django
-    image: backend-django-image:v1
-    volumes:
-      - ./django:/app
+  backend:
+    build: ./django
+    image: backend-movies-image:v1
     command: >
       sh -c "python manage.py makemigrations &&
               python manage.py migrate && 
@@ -32,17 +29,19 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - ./django/.env
 
-  front-end:
+  frontend:
     build: ./front-end
-    image: frontend-react-image:v1
-    command: npm run dev
+    image: frontend-movies-image:v1
+    command: npm run start
     ports:
       - "3000:3000"
     depends_on:
-      - back-end
+      - backend
+    env_file:
+      - ./front-end/.env.local
 
 volumes:
   db_data:
-
-
